@@ -1,31 +1,48 @@
 package com.bl.generics;
 
-public class MaxFinder {
-    public static <T extends Comparable<T>> T findMax(T[] elements) {
-        T max = elements[0];
-        for (T i: elements) {
-            if(i.compareTo(max) > 0)
-                max = i;
-        }
-        return max;
+public class MaxFinder <T extends  Comparable<T>> {
+    //declaring instance variables
+    T [] arrayOfInt,arrayOfFloat,arrayOfString;
+
+    public MaxFinder(T[] arrayOfInt, T[] arrayOfFloat, T[] arrayOfString) {
+        this.arrayOfInt = arrayOfInt;
+        this.arrayOfFloat = arrayOfFloat;
+        this.arrayOfString = arrayOfString;
     }
+    //parameterized constructor
+
 
     public static void main(String[] args) {
-        Integer[] integerValue = {108, 314, 427};
-        Float[]  floatValue = {96.5f, 21.23f, 80.6f};
-        String[] stringValue = {"apple", "banana", "orange"};
 
-//        findMax(integerValue);
-//        findMax(floatValue);
-//        findMax(stringValue);
+        Integer[] a = {22,43,22};
+        Float [] b = {22.5f,34.43f,34.33f};
+        String[] c = {"apple","cat","banana"};
 
-        Integer maxOfThreeInteger = findMax(integerValue);
-        System.out.println("The maximum value of three integers is : "+maxOfThreeInteger);
+        new MaxFinder(a,b,c).testMaximum();
 
-        Float  maxOfThreeFloats = findMax(floatValue);
-        System.out.println("The maximum value of three floats is : "+maxOfThreeFloats);
 
-        String maxOfThreeStrings = findMax(stringValue);
-        System.out.println("The maximum value of three strings is : "+maxOfThreeStrings);
+    }
+
+    private void testMaximum() {
+
+        //passing instance variable to static testMaximum method
+        Integer maxOfThreeInt = (Integer) testMaximum(arrayOfInt);
+        System.out.println("The maximum value of three integers is : "+maxOfThreeInt);
+
+        Float maxOfThreeFloat = (Float) testMaximum(arrayOfFloat);
+        System.out.println("The maximum value of three floats is : "+maxOfThreeFloat);
+
+        String maxOfThreeString = (String) testMaximum(arrayOfString);
+        System.out.println("The maximum value of three string is : "+maxOfThreeString);
+    }
+
+    //displays maximum of three values
+    static <T extends Comparable<T>> T testMaximum(T[] inputArray) {
+        T max = inputArray[0];
+        for(T t : inputArray){
+            if(t.compareTo(max)>0)
+                max=t;
+        }
+        return max;
     }
 }
