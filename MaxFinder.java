@@ -1,21 +1,44 @@
 package com.bl.generics;
 
-public class MaxFinder {
-    // returns the max value of three strings
-    static String findMax(String string1, String string2, String string3) {
-        String max = string1;
-        if(string2.compareTo(max) > 0)
-            max = string2;
-        if (string3.compareTo(max) > 0)
-            max = string3;
-        System.out.printf("Max value of %s %s %s is %s. \n", string1, string2, string3, max);
+public class MaxFinder<T extends Comparable<T>> {
+    //declaring instance variables
+    T[] arrayOfInt, arrayOfFloat, arrayOfString;
 
+    public MaxFinder(T[] arrayOfInt, T[] arrayOfFloat, T[] arrayOfString) {
+        this.arrayOfInt = arrayOfInt;
+        this.arrayOfFloat = arrayOfFloat;
+        this.arrayOfString = arrayOfString;
+    }
+
+    //parameterized constructor
+    public static void main(String[] args) {
+
+        Integer[] a = {2, 43, 22};
+        Float[] b = {22.5f, 34.43f, 34.93f};
+        String[] c = {"apple", "mango", "banana"};
+
+        new MaxFinder(a, b, c).testMaximum();
+    }
+
+    private void testMaximum() {
+        //passing instance variable to static testMaximum method
+        Integer maxOfThreeInt = (Integer) testMaximum(arrayOfInt);
+        System.out.println("The maximum value of three integers is : " + maxOfThreeInt);
+
+        Float maxOfThreeFloat = (Float) testMaximum(arrayOfFloat);
+        System.out.println("The maximum value of three floats is : " + maxOfThreeFloat);
+
+        String maxOfThreeString = (String) testMaximum(arrayOfString);
+        System.out.println("The maximum value of three string is : " + maxOfThreeString);
+    }
+
+    //displays maximum of three values
+    static <T extends Comparable<T>> T testMaximum(T[] inputArray) {
+        T max = inputArray[0];
+        for (T t : inputArray) {
+            if (t.compareTo(max) > 0)
+                max = t;
+        }
         return max;
     }
-
-    public static void main(String[] args) {
-        String string1 = "Apple", string2 = "Peach", string3 = "Banana";
-        String max = findMax(string1, string2, string3);
-    }
-
 }
